@@ -1,14 +1,15 @@
 import { useEffect } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { get } from "../services/ApiEndpoint"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { SetUser } from "../redux/AuthSlice"
-import Sidebar from "../components/common/Sidebar"
 
 export default function ProtectedLayout() {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const userDetails = useSelector(state => state.AuthSlice?.user)
+    const location = useLocation();
 
     useEffect(() => {
         (async () => {
@@ -25,11 +26,14 @@ export default function ProtectedLayout() {
         })()
     }, []);
 
+    if (userDetails?.role == 'user' && location.pathname != '/') {
+        return navigate('/')
+    }
+
     return (
         <>
-         <Sidebar />
-         <Outlet />
+            <Outlet />
         </>
-       
+
     )
 }

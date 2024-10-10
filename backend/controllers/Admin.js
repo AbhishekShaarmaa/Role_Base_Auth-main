@@ -34,12 +34,10 @@ const updateUser = async (req, res) => {
     const userId = req.params.id;
     const {userRole} = req.body;
 
-
-
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { $set: { role: userRole } }, // Update the role
-      { new: true } // Return the updated user
+      { $set: { role: userRole } },
+      { new: true }
     );
 
     if (!updatedUser) {

@@ -15,11 +15,12 @@ const TransactionsTable = () => {
   const [itemsPerPage] = useState(8); // Set the number of items per page
   const [filterDate, setFilterDate] = useState({
     startDate: "",
-    endDate: ""
+    endDate: "",
+    subHead: ""
   });
-  const [selectedSubHead, setSelectedSubHead] = useState(""); // State for selected subHead
-  const [selectedStatus, setSelectedStatus] = useState(""); // State for selected status
-  const [selectedTransactions, setSelectedTransactions] = useState([]); // Track selected transactions
+  const [selectedSubHead, setSelectedSubHead] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedTransactions, setSelectedTransactions] = useState([]);
   const payVoucherRef = useRef();
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -37,17 +38,18 @@ const TransactionsTable = () => {
     }
   };
 
-  // Handle filter including selected subHead and status
   const handleFilter = async () => {
     try {
-      const filters = { ...filterDate }; // Base filter with date range
+      const filters = { ...filterDate };
 
       if (selectedSubHead) {
-        filters.subHead = selectedSubHead; // Add subHead if selected
+        filters.subHead = String(selectedSubHead);
       }
       if (selectedStatus) {
-        filters.status = selectedStatus; // Add status if selected
+        filters.status = selectedStatus;
       }
+
+      console.log("filters",filters)
 
       const response = await axios.post(
         `http://localhost:4000/api/expense/filterDate`,
@@ -86,7 +88,6 @@ const TransactionsTable = () => {
     fetchExpenses();
   }, []);
 
-  // Calculate current transactions for the current page
   const indexOfLastTransaction = currentPage * itemsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - itemsPerPage;
   const currentTransactions = filteredTransactions.slice(
@@ -179,14 +180,14 @@ const TransactionsTable = () => {
                 onChange={(e) => setSelectedSubHead(e.target.value)}
               >
                 <option value="">All</option>
-                <option value="bca">BCA</option>
-                <option value="bba">BBA</option>
-                <option value="omsp">OMSP</option>
-                <option value="exam">Exam</option>
-                <option value="sw">SW</option>
-                <option value="gen">GEN</option>
-                <option value="nss">NSS</option>
-                <option value="ncc">NCC</option>
+                <option value="BCA">BCA</option>
+                <option value="BBA">BBA</option>
+                <option value="OMSP">OMSP</option>
+                <option value="Exam">Exam</option>
+                <option value="SW">SW</option>
+                <option value="GEN">GEN</option>
+                <option value="NSS">NSS</option>
+                <option value="NCC">NCC</option>
               </select>
             </label>
 

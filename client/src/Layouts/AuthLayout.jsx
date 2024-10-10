@@ -22,9 +22,10 @@ export default function AuthLayout() {
   }, [])
 
 
-  if (userData) {
+  if (userData && userData?.role != 'user') {
     navigate('/')
-  } else {
+  }
+  else {
     return <Outlet />
   }
 }
