@@ -1,30 +1,12 @@
-import { useSelector } from 'react-redux';
-import Home from '../pages/Home';
-import Admin from '../pages/Admin';
-import Accountant from '../pages/Accountant';
-import Bursar from '../pages/Bursar';
-import Principal from '../pages/Principal';
+import Sidebar from "../components/common/Sidebar"
+import { Outlet } from 'react-router-dom';
 
 export default function MainLayout() {
+    return (
+        <>
+            <Sidebar />
+            <Outlet />
+        </>
+    )
 
-    const user = useSelector((state) => state.AuthSlice.user);
-
-    console.log(user?.role)
-
-    switch (user?.role) {
-        case "admin":
-            return <Admin />
-
-        case "accountant":
-            return <Accountant />
-
-        case "bursar":
-            return <Bursar />
-
-        case "principal":
-            return <Principal />
-
-        default:
-            return <Home />
-    }
 }

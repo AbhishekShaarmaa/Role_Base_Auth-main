@@ -146,12 +146,12 @@ export const filterExpensesByDateRange = async (req, res) => {
     }
 
     // Handle subHead filtering if provided
-    if (subHead) {
+    if (subHead?.trim()) {
       filter.subHead = subHead;
     }
 
     // Handle status filtering if provided
-    if (status) {
+    if (status?.trim()) {
       filter.status = status;
     }
 
